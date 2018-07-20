@@ -9,5 +9,4 @@ pipeline:
       - DevExpress/okrserver
       - DevExpress/orgstruct
 
-    secrets:
-      - drone_token: downstream_token
+    secrets: [ downstream_token ]
