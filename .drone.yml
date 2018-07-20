@@ -1,0 +1,11 @@
+pipeline:
+  trigger:
+    image: plugins/downstream
+    server: http://ci.resolve.sh
+    fork: true
+    wait: true
+    repositories:
+      - DevExpress/okrserver
+      - DevExpress/orgstruct
+    secrets:
+      - drone_token: downstream_token
