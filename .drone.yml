@@ -2,7 +2,7 @@ pipeline:
   check:
     image: node:9
     commands:
-      - ping -c 3 http://ci.resolve.sh
+      - ping -c 3 ci.resolve.sh
 
   trigger:
     image: plugins/downstream
