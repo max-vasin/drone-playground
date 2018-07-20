@@ -11,7 +11,12 @@ pipeline:
     wait: true
 
     repositories:
-      - DevExpress/okrserver
-      - DevExpress/orgstruct
+      - max-vasin/drone-playground-sub1
+      - max-vasin/drone-playground-sub2
 
     secrets: [ downstream_token ]
+
+  finish:
+    image: node:9
+    commands:
+      - echo 'Two green builds'
