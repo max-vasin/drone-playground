@@ -1,6 +1,6 @@
 pipeline:
   check:
-    image: node9
+    image: node:9
     commands:
       - ping -c 3 http://ci.resolve.sh
 
