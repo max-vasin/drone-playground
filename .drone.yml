@@ -15,10 +15,10 @@ pipeline:
     wait: true
     repositories:
       - max-vasin/drone-playground-sub1@master
-    #  - max-vasin/drone-playground-sub2@master
+
     secrets: [ downstream_token ]
     params:
-      - nightly_version=$(cat .nightly-version)
+      - nightly_version=VERSION
 
 #  finish:
 #    image: node:9
