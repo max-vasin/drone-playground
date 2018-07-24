@@ -10,18 +10,6 @@ pipeline:
       - /scripts/npm_publish $NIGHTLY_VERSION
     secrets: [ npm_repository, npm_token ]
 
-  notify_publisher:
-    image: plugins/downstream
-    server: http://ci.resolve.sh
-    fork: true
-    wait: true
-    repositories:
-      - max-vasin/drone-playground-sub1@master
-
-    secrets: [ downstream_token ]
-    params:
-      - .nightly
-
   trigger:
     image: plugins/downstream
     server: http://ci.resolve.sh
