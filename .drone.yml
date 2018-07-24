@@ -4,7 +4,7 @@ pipeline:
     pull: true
     commands:
       - /scripts/npm_patch_rc
-      - /scripts/npm_publish ${CI_COMMIT}
+      - /scripts/npm_publish ${DRONE_COMMIT}
     secrets: [ npm_repository, npm_token ]
 
 #  trigger:
