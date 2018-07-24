@@ -4,10 +4,23 @@ pipeline:
     pull: true
     commands:
       - export NIGHTLY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
-      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION > .params
+      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
+      - echo NIGHTLY_PACKAGE=$(/scripts/package_json name) >> .nightly
       - /scripts/npm_patch_rc
       - /scripts/npm_publish $NIGHTLY_VERSION
     secrets: [ npm_repository, npm_token ]
+
+  notify_publisher:
+    image: plugins/downstream
+    server: http://ci.resolve.sh
+    fork: true
+    wait: true
+    repositories:
+      - max-vasin/drone-playground-sub1@master
+
+    secrets: [ downstream_token ]
+    params:
+      - .nightly
 
   trigger:
     image: plugins/downstream
@@ -19,9 +32,4 @@ pipeline:
 
     secrets: [ downstream_token ]
     params:
-      - .params
-
-#  finish:
-#    image: node:9
-#    commands:
-#      - echo 'Two green builds'
+      - .nightly
