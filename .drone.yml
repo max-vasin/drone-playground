@@ -3,8 +3,9 @@ pipeline:
     image: maxvasin/resolve-docker
     pull: true
     commands:
+      - /scripts/version nightly ${DRONE_COMMIT} > .nightly-version
       - /scripts/npm_patch_rc
-      - /scripts/npm_publish $(/scripts/version nightly ${DRONE_COMMIT})
+      - /scripts/npm_publish $(cat .nightly-version)
     secrets: [ npm_repository, npm_token ]
 
   trigger:
@@ -17,7 +18,7 @@ pipeline:
     #  - max-vasin/drone-playground-sub2@master
     secrets: [ downstream_token ]
     params:
-      - resolve_commit=${DRONE_COMMIT}
+      - nightly_version=$(cat .nightly-version)
 
 #  finish:
 #    image: node:9
