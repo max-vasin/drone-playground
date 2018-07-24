@@ -3,8 +3,8 @@ pipeline:
     image: maxvasin/resolve-docker
     pull: true
     commands:
-      - echo NIGHTLY_VERSION=$(/scripts/version nightly ${DRONE_COMMIT}) > .params
-      - . .params
+      - export NIGHTLY_VERSION=$(/scripts/version nightly ${DRONE_COMMIT})
+      - echo NIGHTLY_VERSION=${NIGHTLY_VERSION} > .params
       - /scripts/npm_patch_rc
       - /scripts/npm_publish ${NIGHTLY_VERSION}
     secrets: [ npm_repository, npm_token ]
