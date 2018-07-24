@@ -4,20 +4,20 @@ pipeline:
     pull: true
     commands:
       - /scripts/npm_patch_rc
-      - /scripts/npm_publish ${DRONE_COMMIT}
+      - /scripts/npm_publish $(/scripts/version nightly ${DRONE_COMMIT})
     secrets: [ npm_repository, npm_token ]
 
-#  trigger:
-#    image: plugins/downstream
-#    server: http://ci.resolve.sh
-#    fork: true
-#    wait: true
-
-#    repositories:
-#      - max-vasin/drone-playground-sub1@master
-#      - max-vasin/drone-playground-sub2@master
-
-#    secrets: [ downstream_token ]
+  trigger:
+    image: plugins/downstream
+    server: http://ci.resolve.sh
+    fork: true
+    wait: true
+    repositories:
+      - max-vasin/drone-playground-sub1@master
+    #  - max-vasin/drone-playground-sub2@master
+    secrets: [ downstream_token ]
+    params:
+      - resolve_commit=${DRONE_COMMIT}
 
 #  finish:
 #    image: node:9
