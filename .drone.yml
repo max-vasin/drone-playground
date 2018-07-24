@@ -4,6 +4,7 @@ pipeline:
     pull: true
     commands:
       - /scripts/npm_patch_rc.sh
+      - /scripts/npm_publish.sh
     secrets: [ npm_repository, npm_token ]
 
 #  trigger:
