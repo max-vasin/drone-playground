@@ -1,22 +1,24 @@
 pipeline:
-  check:
-    image: node:9
+  publish:
+    image: maxvasin/resolve-docker
+    pull: true
     commands:
-      - ping -c 3 ci.resolve.sh
+      - /scripts/npm_patch_rc.sh
+    secrets: [ npm_repository, npm_token ]
 
-  trigger:
-    image: plugins/downstream
-    server: http://ci.resolve.sh
-    fork: true
-    wait: true
+#  trigger:
+#    image: plugins/downstream
+#    server: http://ci.resolve.sh
+#    fork: true
+#    wait: true
 
-    repositories:
-      - max-vasin/drone-playground-sub1
-      - max-vasin/drone-playground-sub2
+#    repositories:
+#      - max-vasin/drone-playground-sub1@master
+#      - max-vasin/drone-playground-sub2@master
 
-    secrets: [ downstream_token ]
+#    secrets: [ downstream_token ]
 
-  finish:
-    image: node:9
-    commands:
-      - echo 'Two green builds'
+#  finish:
+#    image: node:9
+#    commands:
+#      - echo 'Two green builds'
