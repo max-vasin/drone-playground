@@ -4,7 +4,7 @@ pipeline:
     pull: true
     commands:
       - echo NIGHTLY_VERSION=$(/scripts/version nightly ${DRONE_COMMIT}) > .params
-      - source .params
+      - . .params
       - /scripts/npm_patch_rc
       - /scripts/npm_publish ${NIGHTLY_VERSION}
     secrets: [ npm_repository, npm_token ]
