@@ -3,8 +3,8 @@ pipeline:
     image: maxvasin/resolve-docker
     pull: true
     commands:
-      - /scripts/npm_patch_rc.sh
-      - /scripts/npm_publish.sh
+      - /scripts/npm_patch_rc
+      - /scripts/npm_publish
     secrets: [ npm_repository, npm_token ]
 
 #  trigger:
