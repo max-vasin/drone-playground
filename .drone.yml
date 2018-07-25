@@ -20,8 +20,8 @@ pipeline:
     volumes:
       - /srv/ecs/downstream-registry:/data/registry
     repositories:
-      - maxvasin/drone-playground-sub1
-      - maxvasin/drone-playground-sub2
+      - max-vasin/drone-playground-sub1
+      - max-vasin/drone-playground-sub2
 
   trigger:
     image: plugins/downstream
