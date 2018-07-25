@@ -17,6 +17,9 @@ pipeline:
     registry_path: /data/registry
     action: package-build
     params: .entry
+    success:
+      repo: this_repo
+      environment: apps-success
     on_success:
       - echo Move latest stable tag withing npm
       - ping -c3 ya.ru
