@@ -1,23 +1,33 @@
 pipeline:
-  publish:
-    image: maxvasin/resolve-docker
+  downstream_registry:
+    image: maxvasin/drone-downstream-registry
     pull: true
-    commands:
-      - export NIGHTLY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
-      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
-      - echo NIGHTLY_PACKAGE=$(/scripts/package_json name) >> .nightly
-      - /scripts/npm_patch_rc
-      - /scripts/npm_publish $NIGHTLY_VERSION
-    secrets: [ npm_repository, npm_token ]
+    sample-var:
+      - a
+      - b
+      - c
+    sql-connection: true
+    another-var: this is a string
 
-  trigger:
-    image: plugins/downstream
-    server: http://ci.resolve.sh
-    fork: true
-    wait: true
-    repositories:
-      - max-vasin/drone-playground-sub1@master
-
-    secrets: [ downstream_token ]
-    params:
-      - .nightly
+#  publish:
+#    image: maxvasin/resolve-docker
+#    pull: true
+#    commands:
+#      - export NIGHTLY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
+#      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
+#      - echo NIGHTLY_PACKAGE=$(/scripts/package_json name) >> .nightly
+#      - /scripts/npm_patch_rc
+#      - /scripts/npm_publish $NIGHTLY_VERSION
+#    secrets: [ npm_repository, npm_token ]
+#
+#  trigger:
+#    image: plugins/downstream
+#    server: http://ci.resolve.sh
+#    fork: true
+#    wait: true
+#    repositories:
+#      - max-vasin/drone-playground-sub1@master
+#
+#    secrets: [ downstream_token ]
+#    params:
+#      - .nightly
