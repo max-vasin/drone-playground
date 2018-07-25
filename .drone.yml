@@ -23,17 +23,6 @@ pipeline:
       - maxvasin/drone-playground-sub1
       - maxvasin/drone-playground-sub2
 
-#  publish:
-#    image: maxvasin/resolve-docker
-#    pull: true
-#    commands:
-#      - export NIGHTLY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
-#      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
-#      - echo NIGHTLY_PACKAGE=$(/scripts/package_json name) >> .nightly
-#      - /scripts/npm_patch_rc
-#      - /scripts/npm_publish $NIGHTLY_VERSION
-#    secrets: [ npm_repository, npm_token ]
-#
 #  trigger:
 #    image: plugins/downstream
 #    server: http://ci.resolve.sh
