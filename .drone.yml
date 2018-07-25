@@ -17,6 +17,10 @@ pipeline:
     registry_path: /data/registry
     action: package-build
     params: .entry
+    on_success:
+      - echo Move latest stable tag withing npm
+    on_failure:
+      - echo Notify to teams channel
     volumes:
       - /srv/ecs/downstream-registry:/data/registry
     repositories:
