@@ -4,7 +4,7 @@ pipeline:
     pull: true
     commands:
       - export REGISTRY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
-      - echo REGISTRY_VERSION=$NIGHTLY_VERSION >> .entry
+      - echo REGISTRY_VERSION=REGISTRY_VERSION >> .entry
       - echo REGISTRY_PACKAGE=$(/scripts/package_json name) >> .entry
       - echo REGISTRY_DOWNSTREAM=true >> .entry
       - /scripts/npm_patch_rc
