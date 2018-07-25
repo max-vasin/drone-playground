@@ -19,8 +19,10 @@ pipeline:
     params: .entry
     on_success:
       - echo Move latest stable tag withing npm
+      - ping -c 3 ya.ru
     on_failure:
       - echo Notify to teams channel
+      - curl ya.ru
     volumes:
       - /srv/ecs/downstream-registry:/data/registry
     repositories:
