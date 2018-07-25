@@ -1,13 +1,27 @@
 pipeline:
+  publish:
+    image: maxvasin/resolve-docker
+    pull: true
+    commands:
+      - export REGISTRY_VERSION=$(/scripts/package_json nightly ${DRONE_COMMIT})
+      - echo REGISTRY_VERSION=$NIGHTLY_VERSION >> .entry
+      - echo REGISTRY_PACKAGE=$(/scripts/package_json name) >> .entry
+      - echo REGISTRY_DOWNSTREAM=true >> .entry
+      - /scripts/npm_patch_rc
+      - /scripts/npm_publish $REGISTRY_VERSION
+    secrets: [ npm_repository, npm_token ]
+
   downstream_registry:
     image: maxvasin/drone-downstream-registry
     pull: true
-    sample-var:
-      - a
-      - b
-      - c
-    sql-connection: true
-    another-var: this is a string
+    registry_path: /data/registry
+    action: package-build
+    params: .entry
+    volumes:
+      - /srv/ecs/downstream-registry:/data/registry
+    repositories:
+      - maxvasin/drone-playground-sub1
+      - maxvasin/drone-playground-sub2
 
 #  publish:
 #    image: maxvasin/resolve-docker
