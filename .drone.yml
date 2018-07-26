@@ -16,8 +16,10 @@ pipeline:
   downstream_registry:
     image: maxvasin/drone-downstream-registry
     pull: true
+
     registry_path: /data/registry
     action: package-build
+    server: http://ci.resolve.sh
     params: .entry
     repositories:
       - max-vasin/drone-playground-sub1
@@ -41,11 +43,13 @@ pipeline:
       event: push
 
   npm-tag:
-    image: node:9
+    image: maxvasin/resolve-docker
+    pull: true
     commands:
-      - echo Tagging NPM package
-      - echo Package $REGISTRY_PACKAGE
-      - echo Version $REGISTRY_VERSION
+      - /scripts/npm_patch_rc
+      - /scripts/npm_tag $REGISTRY_PACKAGE $REGISTRY_VERSION latest-stable
+
+    secrets: [ npm_repository, npm_token ]
     when:
       event: deployment
       environment: downstream-success
