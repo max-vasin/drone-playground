@@ -10,6 +10,8 @@ pipeline:
       - /scripts/npm_patch_rc
       - /scripts/npm_publish $REGISTRY_VERSION
     secrets: [ npm_repository, npm_token ]
+    when:
+      event: push
 
   downstream_registry:
     image: maxvasin/drone-downstream-registry
@@ -17,20 +19,11 @@ pipeline:
     registry_path: /data/registry
     action: package-build
     params: .entry
-    success:
-      repo: this_repo
-      environment: apps-success
-    on_success:
-      - echo Move latest stable tag withing npm
-      - ping -c3 ya.ru
-    on_failure:
-      - echo Notify to teams channel
-      - curl ya.ru
-    volumes:
-      - /srv/ecs/downstream-registry:/data/registry
     repositories:
       - max-vasin/drone-playground-sub1
       - max-vasin/drone-playground-sub2
+    when:
+      event: push
 
   trigger:
     image: plugins/downstream
@@ -44,3 +37,26 @@ pipeline:
     secrets: [ downstream_token ]
     params:
       - .entry
+    when:
+      event: push
+
+  npm-tag:
+    image: node:9
+    commands:
+      - echo Tagging NPM package
+      - echo Package $REGISTRY_PACKAGE
+      - echo Version $REGISTRY_VERSION
+    when:
+      event: deployment
+      environment: downstream-success
+
+  notify-downstream-failure:
+    image: node:9
+    commands:
+      - echo Downstream builds failure
+    when:
+      event: deployment
+      environment: downstream-failure
+
+
+
