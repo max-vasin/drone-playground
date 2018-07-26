@@ -8,7 +8,7 @@ pipeline:
       - echo REGISTRY_PACKAGE=$(/scripts/package_json name) >> .entry
       - echo REGISTRY_DOWNSTREAM=true >> .entry
       - /scripts/npm_patch_rc
-      - /scripts/npm_publish $REGISTRY_VERSION
+      - /scripts/npm_publish $REGISTRY_VERSION nightly
     secrets: [ npm_repository, npm_token ]
     when:
       event: push
