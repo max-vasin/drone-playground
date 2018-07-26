@@ -16,12 +16,13 @@ pipeline:
   downstream_registry:
     image: maxvasin/drone-downstream-registry
     pull: true
-
     registry_path: /data/registry
     action: package-build
     server: http://ci.resolve.sh
     params: .entry
     secrets: [ secret_server_token ]
+    volumes:
+      - /srv/ecs/downstream-registry:/data/registry
     when:
       event: push
     repositories:
