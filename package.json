@@ -1,5 +1,5 @@
 {
-  "name": "@badgeteam/drone-fake",
+  "name": "drone-fake",
   "version": "0.1.0",
   "dependencies": {}
 }
