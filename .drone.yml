@@ -9,7 +9,7 @@ pipeline:
       - echo REGISTRY_DOWNSTREAM=true >> .entry
       - /scripts/npm_patch_rc
       - /scripts/npm_publish $REGISTRY_VERSION nightly
-    secrets: [ npm_repository, npm_token ]
+    secrets: [ npm_registry, npm_token ]
     when:
       event: push
 
@@ -50,7 +50,7 @@ pipeline:
       - /scripts/npm_patch_rc
       - /scripts/npm_tag $REGISTRY_VERSION latest-stable
 
-    secrets: [ npm_repository, npm_token ]
+    secrets: [ npm_registry, npm_token ]
     when:
       event: deployment
       environment: downstream-success
